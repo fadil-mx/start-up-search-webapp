@@ -1,6 +1,9 @@
 import { create } from "domain";
 import Searchbar from "../../components/Search";
 import Cards from "@/components/Cards";
+import { client } from "@/sanity/lib/client";
+import { startups_query } from "@/sanity/lib/queries";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({
   searchParams,
@@ -8,27 +11,33 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const { query } = await searchParams; 
+  const params = { search: query || null };
+    // console.log(params);
+  
 
-  const posts=[{
-    _createdAt:Date.now(),
-    views:"65",
-    author:{_id:5,name:"max"},
-    _id:5,
-    description:"asdasddfiasfhlhovyao",
-    image:"https://imgs.search.brave.com/LnKgdImhOUagSSmWCOOnQkSaJbThfodK_XWJVcfEQSU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzcwLzY1Lzcw/LzM2MF9GXzU3MDY1/NzAzM185b0JsWVBn/YWVQQmdSc0xzSndD/cHA1eGZpTmNVZjBs/Yy5qcGc",
-    category:"sdass",
-    title:"dadasd"
-  },{
-    _createdAt:Date.now(),
-    views:"65",
-    author:{_id:5,name:"max"},
-    _id:5,
-    description:"asdasddfsfasd",
-    image:"https://imgs.search.brave.com/LnKgdImhOUagSSmWCOOnQkSaJbThfodK_XWJVcfEQSU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzcwLzY1Lzcw/LzM2MF9GXzU3MDY1/NzAzM185b0JsWVBn/YWVQQmdSc0xzSndD/cHA1eGZpTmNVZjBs/Yy5qcGc",
-    category:"sass",
-    title:"dadasd"
-  }]
+  // const posts=[{
+  //   _createdAt:Date.now(),
+  //   views:"65",
+  //   author:{_id:5,name:"max"},
+  //   _id:5,
+  //   description:"asdasddfiasfhlhovyao",
+  //   image:"https://imgs.search.brave.com/LnKgdImhOUagSSmWCOOnQkSaJbThfodK_XWJVcfEQSU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzcwLzY1Lzcw/LzM2MF9GXzU3MDY1/NzAzM185b0JsWVBn/YWVQQmdSc0xzSndD/cHA1eGZpTmNVZjBs/Yy5qcGc",
+  //   category:"sdass",
+  //   title:"dadasd"
+  // },{
+  //   _createdAt:Date.now(),
+  //   views:"65",
+  //   author:{_id:5,name:"max"},
+  //   _id:5,
+  //   description:"asdasddfsfasd",
+  //   image:"https://imgs.search.brave.com/LnKgdImhOUagSSmWCOOnQkSaJbThfodK_XWJVcfEQSU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzcwLzY1Lzcw/LzM2MF9GXzU3MDY1/NzAzM185b0JsWVBn/YWVQQmdSc0xzSndD/cHA1eGZpTmNVZjBs/Yy5qcGc",
+  //   category:"sass",
+  //   title:"dadasd"
+  // }]
 
+  // const posts = await client.fetch(startups_query);
+  const {data:posts}=await sanityFetch({ query:startups_query,  params})
+   console.log(posts);  
 
   return (
     <>
@@ -59,6 +68,7 @@ export default async function Home({
           )}
         </ul>
       </section>
+      <SanityLive />
     </>
   );
 }
