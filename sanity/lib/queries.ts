@@ -20,10 +20,28 @@ export const  startups_query = defineQuery(`*[_type == "startup" && defined(slug
     slug,
     _createdAt,
     author -> {
-      _id, name, image, bio
+      _id, name,username, image, bio
     }, 
     views,
     description,
     category,
     image,
+    pitch
   }`)
+
+
+  export const STARTUP_VIEWS_QUERY = defineQuery(`
+    *[_type == "startup" && _id == $id][0]{
+        _id, view
+    }
+`);
+
+export const AUTHOR_BY_GITHUB_ID = defineQuery(`*[_type == "author" &&    id == $id][0]{
+    _id,
+    id,
+    name,
+    username,
+    email,
+    image,
+    bio,
+      }`)
