@@ -41,7 +41,9 @@ export default async function Home({
   //  console.log(posts);  
 
   const session= await auth()
-  // console.log(session?.id);
+  // console.log(session.id);
+  // console.log(session.name);
+
   
 
   return (

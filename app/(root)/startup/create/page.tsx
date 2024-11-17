@@ -4,8 +4,9 @@ import { redirect } from "next/dist/server/api-utils"
 
 
 const page = async() => {
-  const sessiom=await auth()
-  if(!sessiom) redirect('/')
+  const session=await auth()
+  if(!session) redirect('/')
+    
   return (
   <>
    <section className="pink_container !min-h-[230px]">

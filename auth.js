@@ -12,8 +12,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             profile: { id, login, bio },
         }) {
             const existingUser = await client.withConfig({ useCdn: false }).fetch(AUTHOR_BY_GITHUB_ID, { id });
-
-
             if (!existingUser) {
                 await writeclient.create({
                     _type: "author",
@@ -37,12 +35,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     });
 
                 token.id = user?._id;
+                token.name = user?.name;
+
             }
 
             return token;
         },
         async session({ session, token }) {
             Object.assign(session, { id: token.id });
+            Object.assign(session, { name: token.name });
+
             return session;
         },
     }
